@@ -62,11 +62,22 @@ class Array
 
     end
 
-    def my_flatten
-        # if !ele.is_a?(Array)
-        #     [ele]
-        # end
-        # flattened = []
+    def my_flatten #[1, 2, 3, [4, [5, 6]], [[[7]], 8]]
+        flat = []
+
+        self.each_with_index do |ele, idx|
+            if !ele.is_a?(Array)
+                flat << ele 
+            else
+                flate += self[idx..-1].my_flatten
+            end
+        end
+        
+        if !self.is_a?(Array)
+            return [self]
+        end
+
+        return flat 
 
         
     end
@@ -101,6 +112,47 @@ class Array
             
         new_arr
 
+    end
+
+
+    def my_rotate(num=1)
+        if num > 0
+            num.times do |ele|
+                ele = self.shift
+                self.push(ele)
+            end 
+        else
+            (-num).times do |ele|
+                ele = self.pop 
+                self.unshift(ele)
+            end
+        end
+        return self
+        
+
+    end
+
+    def my_join(str="")
+        new_str = ""
+        self.each do |ele|
+            if ele == self[-1]
+                new_str += ele
+            else
+                new_str += ele + str 
+            end
+        end
+        return new_str
+
+    end
+
+    def my_reverse
+        rev = []
+        i = self.length - 1
+        while i >= 0
+            rev << self[i]
+            i -= 1
+        end
+        return rev
     end
 
 end
